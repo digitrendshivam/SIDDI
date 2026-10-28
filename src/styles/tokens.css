@@ -343,13 +343,20 @@ h3 {
   z-index: 50;
   inset: 0 0 auto;
   height: 68px;
-  background: var(--ink);
+  background: rgba(14, 14, 16, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--line);
-  transform: translateY(0);
-  transition: transform 300ms var(--ease-in-out);
+  transform: translateY(0) !important;
+  transition: background-color 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+.site-header--scrolled {
+  background: rgba(14, 14, 16, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
 }
 .site-header--hidden {
-  transform: translateY(-100%);
+  transform: translateY(0) !important;
 }
 .site-header__inner {
   height: 100%;
@@ -419,9 +426,12 @@ h3 {
 .site-footer__brand img {
   display: block;
   width: auto;
-  height: 42px;
+  height: 62px;
 }
-.site-footer__brand { padding: 4px 8px; border-radius: var(--radius-button); background: #111112; }
+.site-footer__brand {
+  border-radius: var(--radius-button);
+  background: #111112;
+}
 .site-footer__brand-block p,
 .site-footer__contact p {
   max-width: 290px;
@@ -523,8 +533,14 @@ h3 {
   outline-offset: 3px;
 }
 @keyframes floating-action-enter {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @media (hover: hover) and (pointer: fine) {
   .floating-back-to-top:hover {
@@ -747,6 +763,7 @@ h3 {
     opacity 150ms var(--ease-out),
     transform 150ms var(--ease-out),
     visibility 150ms;
+  color: white;
 }
 .product-card__option-wheel:hover .product-card__wheel-name,
 .product-card__option-wheel:focus-within .product-card__wheel-name,
@@ -835,7 +852,9 @@ h3 {
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.28);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-    transition: transform 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
+    transition:
+      transform 150ms var(--ease-out),
+      box-shadow 150ms var(--ease-out);
   }
   .product-card__mobile-swatch.is-selected .product-card__mobile-swatch-dot {
     box-shadow:
@@ -1510,8 +1529,8 @@ main .trade-desk-aside__next li > span {
 
 .catalogue-page {
   min-height: 70vh;
-  background: var(--ink);
-  color: var(--text);
+  background: #FAF8F5;
+  color: #171719;
 }
 .catalogue {
   padding-top: 32px;
@@ -2091,7 +2110,9 @@ main .trade-desk-aside__next li > span {
   border: 1px solid #26262a;
   border-radius: clamp(22px, 3.4vw, 42px);
   background: #ffffff;
-  box-shadow: 0 -24px 72px rgb(0 0 0 / 30%), 0 28px 72px rgb(0 0 0 / 11%);
+  box-shadow:
+    0 -24px 72px rgb(0 0 0 / 30%),
+    0 28px 72px rgb(0 0 0 / 11%);
 }
 .home-scroll-card > .home-section,
 .home-scroll-card > .home-applications,
@@ -2124,14 +2145,27 @@ main .trade-desk-aside__next li > span {
   z-index: -1;
   inset: 0;
   background-image:
-    linear-gradient(90deg, rgb(10 11 12 / 98%) 0%, rgb(10 11 12 / 90%) 28%, rgb(10 11 12 / 58%) 48%, rgb(10 11 12 / 14%) 78%),
-    linear-gradient(0deg, rgb(10 11 12 / 95%) 0%, rgb(10 11 12 / 30%) 28%, transparent 58%),
-    url('/Luxury Bathroom Door Handle Close-Up.png');
+    linear-gradient(
+      90deg,
+      rgb(10 11 12 / 98%) 0%,
+      rgb(10 11 12 / 90%) 28%,
+      rgb(10 11 12 / 58%) 48%,
+      rgb(10 11 12 / 14%) 78%
+    ),
+    linear-gradient(
+      0deg,
+      rgb(10 11 12 / 95%) 0%,
+      rgb(10 11 12 / 30%) 28%,
+      transparent 58%
+    ),
+    url("/Luxury Bathroom Door Handle Close-Up.png");
   background-size: cover;
   background-position: center 48%;
-  opacity: .72;
+  opacity: 0.72;
   transform: scale(1.06);
-  transition: opacity 1100ms var(--ease-out), transform 1400ms var(--ease-out);
+  transition:
+    opacity 1100ms var(--ease-out),
+    transform 1400ms var(--ease-out);
 }
 .home-hero[data-hero-reveal="shown"] .home-hero__backdrop {
   opacity: 1;
@@ -2157,21 +2191,21 @@ main .trade-desk-aside__next li > span {
   margin: 0;
   color: var(--text);
   font-size: 11px;
-  letter-spacing: .14em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 .home-hero__eyebrow span {
   width: 34px;
   height: 1px;
   background: var(--text);
-  opacity: .7;
+  opacity: 0.7;
 }
 .home-hero__content h1 {
   max-width: none;
   margin: 20px 0 18px;
   font-size: clamp(48px, 6.3vw, 92px);
-  line-height: .98;
-  letter-spacing: -.055em;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
 }
 .home-hero__title-line {
   display: block;
@@ -2227,7 +2261,9 @@ main .trade-desk-aside__next li > span {
   backdrop-filter: blur(10px);
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 700ms 260ms var(--ease-out), transform 700ms 260ms var(--ease-out);
+  transition:
+    opacity 700ms 260ms var(--ease-out),
+    transform 700ms 260ms var(--ease-out);
 }
 .home-hero[data-hero-reveal="shown"] .home-hero__links {
   opacity: 1;
@@ -2246,8 +2282,13 @@ main .trade-desk-aside__next li > span {
   text-decoration: none;
   transition: background-color 220ms var(--ease-out);
 }
-.home-hero__link:first-child { padding-left: 16px; }
-.home-hero__link:last-child { padding-right: 16px; border-right: 0; }
+.home-hero__link:first-child {
+  padding-left: 16px;
+}
+.home-hero__link:last-child {
+  padding-right: 16px;
+  border-right: 0;
+}
 .home-hero__quick-art {
   display: block;
   width: 66px;
@@ -2257,7 +2298,11 @@ main .trade-desk-aside__next li > span {
   border-radius: 3px;
   object-position: center;
 }
-.home-hero__link-number { color: var(--text); font-size: 12px; line-height: 1; }
+.home-hero__link-number {
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1;
+}
 .home-hero__link-title {
   display: flex;
   align-items: center;
@@ -2266,7 +2311,12 @@ main .trade-desk-aside__next li > span {
   font-size: 14px;
   font-weight: 650;
 }
-.home-hero__link-text { margin-top: 6px; color: rgb(241 240 236 / 72%); font-size: 13px; line-height: 1.4; }
+.home-hero__link-text {
+  margin-top: 6px;
+  color: rgb(241 240 236 / 72%);
+  font-size: 13px;
+  line-height: 1.4;
+}
 .home-hero__link-arrow {
   margin-top: auto;
   padding-top: 10px;
@@ -2551,22 +2601,28 @@ main .trade-desk-aside__next li > span {
   background: var(--ink-2);
 }
 .home-process__step {
+  position: relative;
+  overflow: hidden;
   min-height: 200px;
   padding: clamp(24px, 3.2vw, 38px);
   border-left: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  transition: opacity 280ms var(--ease-out), border-color 280ms var(--ease-out), background-color 280ms var(--ease-out);
+  cursor: pointer;
+  background-color: var(--ink-2);
+  transition:
+    opacity 300ms var(--ease-out),
+    border-color 300ms var(--ease-out);
 }
 .home-process__step:first-child {
-  border-left: 0;
+  border-left: 2px solid transparent;
 }
 .home-process__step-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 .home-process__step-header .mono-label {
   color: var(--yellow);
@@ -2574,40 +2630,47 @@ main .trade-desk-aside__next li > span {
   letter-spacing: 0.1em;
 }
 .home-process__step-marker {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: transparent;
-  transition: background-color 250ms var(--ease-out), border-color 250ms var(--ease-out), transform 250ms var(--ease-out);
+  display: none !important;
 }
-.home-process__step.is-active {
-  opacity: 1;
-  background: var(--ink-3);
-  border-color: var(--yellow);
+.home-process__step.is-active,
+.home-process__step.is-completed {
+  border-left: 2px solid #FFC400 !important;
+  box-shadow: none !important;
 }
-.home-process__step.is-active .home-process__step-marker {
-  background: var(--yellow);
-  border-color: var(--yellow);
-  transform: scale(1.35);
-  box-shadow: 0 0 8px rgba(242, 180, 24, 0.4);
+.home-process__step.is-active h3 {
+  color: #ffffff;
 }
-.home-process__step:not(.is-active) {
-  opacity: 0.4;
+.home-process__step.is-active p {
+  color: #d4d4d8;
+}
+.home-process__step.is-completed h3 {
+  color: #f1f0ec;
+}
+.home-process__step.is-completed p {
+  color: #b4b4bc;
+}
+.home-process__step:not(.is-active):not(.is-completed) h3 {
+  color: #71717a;
+}
+.home-process__step:not(.is-active):not(.is-completed) p {
+  color: #52525b;
+}
+.home-process__step:not(.is-active):not(.is-completed) .mono-label {
+  opacity: 0.55;
 }
 .home-process__step h3 {
   margin: 0 0 10px;
   font-size: 19px;
   font-weight: 700;
-  color: var(--text);
   line-height: 1.35;
+  transition: color 250ms ease;
 }
 .home-process__step p {
   max-width: 38ch;
   margin: 0;
-  color: var(--dim);
   font-size: 14px;
   line-height: 1.6;
+  transition: color 250ms ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -2617,9 +2680,13 @@ main .trade-desk-aside__next li > span {
 }
 
 @media (max-width: 1023px) {
-  .home-process__step,
-  .home-process__step:not(.is-active) {
+  .home-process__step.is-active {
     opacity: 1 !important;
+    border-top: 2px solid var(--yellow) !important;
+    background: #18181c !important;
+  }
+  .home-process__step:not(.is-active) {
+    opacity: 0.45 !important;
   }
 }
 .home-quote-band {
@@ -2677,7 +2744,10 @@ main .trade-desk-aside__next li > span {
   border-color: var(--yellow);
   background: var(--yellow);
   color: #111112;
-  transition: background-color 220ms var(--ease-out), color 220ms var(--ease-out), border-color 220ms var(--ease-out);
+  transition:
+    background-color 220ms var(--ease-out),
+    color 220ms var(--ease-out),
+    border-color 220ms var(--ease-out);
 }
 .home-page > .home-quote-band .home-quote-band__link:hover {
   border-color: #f1f0ec;
@@ -2722,9 +2792,19 @@ main .trade-desk-aside__next li > span {
   }
   .home-hero__backdrop {
     background-image:
-      linear-gradient(90deg, rgb(10 11 12 / 94%) 0%, rgb(10 11 12 / 76%) 54%, rgb(10 11 12 / 42%) 100%),
-      linear-gradient(0deg, rgb(10 11 12 / 96%) 0%, rgb(10 11 12 / 35%) 40%, transparent 75%),
-      url('/Luxury Bathroom Door Hardware.png');
+      linear-gradient(
+        90deg,
+        rgb(10 11 12 / 94%) 0%,
+        rgb(10 11 12 / 76%) 54%,
+        rgb(10 11 12 / 42%) 100%
+      ),
+      linear-gradient(
+        0deg,
+        rgb(10 11 12 / 96%) 0%,
+        rgb(10 11 12 / 35%) 40%,
+        transparent 75%
+      ),
+      url("/Luxury Bathroom Door Hardware.png");
     background-position: 55% center;
   }
   .home-hero__inner {
@@ -2772,8 +2852,15 @@ main .trade-desk-aside__next li > span {
     border-bottom: 1px solid rgb(255 255 255 / 14%);
     border-right: 0;
   }
-  .home-hero__link:first-child { padding-left: 16px; }
-  .home-hero__link:last-child { grid-column: auto; min-height: 68px; padding-right: 16px; border-bottom: 0; }
+  .home-hero__link:first-child {
+    padding-left: 16px;
+  }
+  .home-hero__link:last-child {
+    grid-column: auto;
+    min-height: 68px;
+    padding-right: 16px;
+    border-bottom: 0;
+  }
   .home-hero__quick-art {
     grid-column: 1;
     grid-row: 1 / 3;
@@ -2795,7 +2882,9 @@ main .trade-desk-aside__next li > span {
     margin-top: 1px;
     font-size: 13px;
   }
-  .home-hero__link-text { display: none; }
+  .home-hero__link-text {
+    display: none;
+  }
   .home-hero__link-arrow {
     grid-column: 3;
     grid-row: 1 / 3;
@@ -2873,41 +2962,89 @@ main .trade-desk-aside__next li > span {
 @media (min-width: 768px) and (max-width: 1023px) {
   .home-hero__backdrop {
     background-image:
-      linear-gradient(90deg, rgb(10 11 12 / 96%) 0%, rgb(10 11 12 / 78%) 42%, rgb(10 11 12 / 30%) 100%),
-      linear-gradient(0deg, rgb(10 11 12 / 94%) 0%, rgb(10 11 12 / 28%) 34%, transparent 66%),
-      url('/Luxe Bathroom Door Hardware.png');
+      linear-gradient(
+        90deg,
+        rgb(10 11 12 / 96%) 0%,
+        rgb(10 11 12 / 78%) 42%,
+        rgb(10 11 12 / 30%) 100%
+      ),
+      linear-gradient(
+        0deg,
+        rgb(10 11 12 / 94%) 0%,
+        rgb(10 11 12 / 28%) 34%,
+        transparent 66%
+      ),
+      url("/Luxe Bathroom Door Hardware.png");
     background-position: center 48%;
   }
 }
 @media (min-width: 768px) and (max-width: 1100px) {
-  .home-hero__links { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  .home-hero__link { min-height: 165px; }
-  .home-hero__link:first-child { padding-left: 40px; }
-  .home-hero__link:nth-child(-n + 3) { grid-column: span 2; }
-  .home-hero__link:nth-child(4) { grid-column: 2 / span 2; }
-  .home-hero__link:nth-child(5) { grid-column: 4 / span 2; }
-  .home-hero__link:nth-child(3) { border-right: 0; }
-  .home-hero__link:nth-child(-n + 3) { border-bottom: 1px solid rgb(255 255 255 / 14%); }
-  .home-hero__link:nth-child(n + 4) {
-    border-left: 1px solid rgb(255 255 255 / 14%);
+  .home-hero__links {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .home-hero__link {
+    min-height: 160px;
+    padding: 18px clamp(10px, 1.4vw, 18px) 16px;
     border-right: 1px solid rgb(255 255 255 / 14%);
+    border-bottom: 0;
+  }
+  .home-hero__link:first-child {
+    padding-left: clamp(20px, 3.5vw, 40px);
+  }
+  .home-hero__link:last-child {
+    padding-right: clamp(20px, 3.5vw, 40px);
+    border-right: 0;
+  }
+  .home-hero__quick-art {
+    width: clamp(44px, 4.8vw, 58px);
+    height: clamp(34px, 3.8vw, 46px);
+  }
+  .home-hero__link-title {
+    font-size: clamp(12px, 1.25vw, 14px);
+    gap: 4px;
+  }
+  .home-hero__link-text {
+    font-size: clamp(11px, 1.1vw, 12.5px);
+    line-height: 1.35;
+  }
+  .home-hero__link-arrow {
+    width: 20px;
+    height: 20px;
   }
 }
 
 @media (min-width: 640px) {
-  .home-hero__links { margin-inline: -24px; }
-  .home-hero__link:first-child { padding-left: 24px; }
-  .home-hero__link:last-child { padding-right: 24px; }
+  .home-hero__links {
+    margin-inline: -24px;
+  }
+  .home-hero__link:first-child {
+    padding-left: 24px;
+  }
+  .home-hero__link:last-child {
+    padding-right: 24px;
+  }
 }
 @media (min-width: 768px) {
-  .home-hero__links { margin-inline: -40px; }
-  .home-hero__link:first-child { padding-left: 40px; }
-  .home-hero__link:last-child { padding-right: 40px; }
+  .home-hero__links {
+    margin-inline: -40px;
+  }
+  .home-hero__link:first-child {
+    padding-left: 40px;
+  }
+  .home-hero__link:last-child {
+    padding-right: 40px;
+  }
 }
 @media (min-width: 1024px) {
-  .home-hero__links { margin-inline: -64px; }
-  .home-hero__link:first-child { padding-left: 64px; }
-  .home-hero__link:last-child { padding-right: 64px; }
+  .home-hero__links {
+    margin-inline: -64px;
+  }
+  .home-hero__link:first-child {
+    padding-left: 64px;
+  }
+  .home-hero__link:last-child {
+    padding-right: 64px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3107,9 +3244,7 @@ main .trade-desk-aside__next li > span {
 .trade-desk-faq {
   padding-block: 148px;
 }
-.trade-desk-faq > .w-full {
-  padding-inline: clamp(24px, 3.65vw, 70px) !important;
-}
+
 .trade-desk-faq__list.bouncy-accordion {
   width: 100%;
 }
@@ -3165,9 +3300,7 @@ main .trade-desk-aside__next li > span {
   .trade-desk-faq {
     padding-block: 48px;
   }
-  .trade-desk-faq > .w-full {
-    padding-inline: 20px !important;
-  }
+  
   .trade-desk-faq__list .bouncy-accordion__trigger {
     min-height: 64px;
     font-size: 14px;
@@ -3291,8 +3424,6 @@ main .trade-desk-aside__next li > span {
   }
 }
 
-
-
 /* Premium Asymmetric Bento Grid Section (5-Card Architectural Spec) */
 .font-serif {
   font-family: var(--font-serif);
@@ -3342,7 +3473,9 @@ main .trade-desk-aside__next li > span {
 .bento-card .bento-arrow {
   border: 1px solid rgba(255, 255, 255, 0.65) !important;
   color: #ffffff !important;
-  transition: transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1), border-color 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition:
+    transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {

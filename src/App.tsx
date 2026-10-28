@@ -1,16 +1,13 @@
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Header } from './components/layout/Header';
-import { Footer } from './components/layout/Footer';
+import { Layout } from './components/layout/Layout';
 import { ScrollToTop } from './components/common/ScrollToTop';
-import { PageLoader } from './components/common/PageLoader';
-import { FloatingActions } from './components/common/FloatingActions';
+import { DoorTransition } from './components/common/DoorTransition';
 
 import { HomePage } from './pages/HomePage';
 import { ProductsPage } from './pages/ProductsPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
 import { AboutPage } from './pages/AboutPage';
-import { ApplicationsPage } from './pages/ApplicationsPage';
 import { ResourcesPage } from './pages/ResourcesPage';
 import { TradeDeskPage } from './pages/TradeDeskPage';
 import { PrivacyPage } from './pages/PrivacyPage';
@@ -200,29 +197,23 @@ function AppContent() {
   return (
     <>
       <ScrollToTop />
-      {/* Dynamic Page Loading Animation on route change */}
-      <PageLoader />
-      <div className="min-h-screen flex flex-col bg-[#F4F3EF] text-[#171719] max-w-full overflow-x-clip">
-        <Header />
-        <main className="flex-grow w-full max-w-full min-w-0 pt-[68px] overflow-x-clip">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/products/:category" element={<ProductsPage />} />
-            <Route path="/product/:slug" element={<ProductDetailPage />} />
-            <Route path="/applications" element={<ApplicationsPage />} />
-            <Route path="/resources" element={<ResourcesPage />} />
-            <Route path="/trade-desk" element={<TradeDeskPage />} />
-            <Route path="/contact" element={<Navigate to="/trade-desk" replace />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/privacy" element={<PrivacyPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </main>
-        <Footer />
-        {/* Single WhatsApp action; it hides when the footer enters view. */}
-        <FloatingActions />
-      </div>
+      {/* 3D Double-Door Architectural Page Transition with Rotating Brass Lever */}
+      <DoorTransition />
+      <Layout>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:category" element={<ProductsPage />} />
+          <Route path="/product/:slug" element={<ProductDetailPage />} />
+          <Route path="/applications" element={<Navigate to="/products" replace />} />
+          <Route path="/resources" element={<ResourcesPage />} />
+          <Route path="/trade-desk" element={<TradeDeskPage />} />
+          <Route path="/contact" element={<TradeDeskPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Layout>
     </>
   );
 }

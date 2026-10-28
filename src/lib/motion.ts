@@ -55,6 +55,9 @@ export function initSmoothScroll(): Lenis | null {
   gsap.ticker.lagSmoothing(0);
 
   lenisInstance = lenis;
+  if (typeof window !== 'undefined') {
+    (window as any).__lenis = lenis;
+  }
   return lenis;
 }
 

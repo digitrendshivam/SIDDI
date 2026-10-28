@@ -1,3 +1,4 @@
+import { Container } from '../layout/Layout';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight, BookOpen, Stack, Palette } from '@phosphor-icons/react';
@@ -114,7 +115,7 @@ export const FinishOptionsSection: React.FC = () => {
           - Six realistic radial metallic swatches in single horizontal row with active card & gold bottom accent
           - Contained white card below containing all content (no 2nd image)
          ========================================================================= */}
-      <div className="hidden lg:block w-full px-4 sm:px-6 md:px-10 lg:px-16 relative">
+      <Container className="hidden lg:block relative">
         
         {/* Top-Right Ambient Photographic Visual - Exact recreation from reference */}
         <div className="absolute top-[-10px] right-6 lg:right-12 xl:right-16 w-[380px] xl:w-[440px] pointer-events-none select-none z-0">
@@ -295,7 +296,7 @@ export const FinishOptionsSection: React.FC = () => {
           </div>
         </div>
 
-      </div>
+      </Container>
 
       {/* =========================================================================
           MOBILE & TABLET LAYOUT (< lg):
@@ -304,7 +305,7 @@ export const FinishOptionsSection: React.FC = () => {
           3. 2nd image removed - all content cleanly contained
           4. Main image changes dynamically on finish option selection
          ========================================================================= */}
-      <div className="block lg:hidden w-full px-4 sm:px-6 md:px-10 lg:px-16">
+      <Container className="block lg:hidden">
         <div>
           {/* Eyebrow */}
           <span className="block text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-[#946B00] uppercase mb-2">
@@ -429,7 +430,7 @@ export const FinishOptionsSection: React.FC = () => {
           </div>
 
         </div>
-      </div>
+      </Container>
 
     </section>
   );

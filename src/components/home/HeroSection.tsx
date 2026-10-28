@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from '@phosphor-icons/react';
 import { Button } from '../common/Button';
+import { Container } from '../layout/Layout';
 
 const heroLinks = [
   { number: '01', title: 'Explore products', text: <>View detailed specifications.</>, to: '/products', img:'/Brushed Metal Door Lever Handle.png' },
@@ -14,7 +15,7 @@ const heroLinks = [
 export const HeroSection: React.FC = () => (
   <section className="home-hero" aria-labelledby="home-hero-title">
     <div className="home-hero__backdrop" aria-hidden="true" />
-    <div className="home-hero__inner w-full px-4 sm:px-6 md:px-10 lg:px-16">
+    <Container className="home-hero__inner">
       <div className="home-hero__content">
         <h1 id="home-hero-title"><span className="home-hero__title-line">Built for</span><span className="home-hero__title-line">Better Spaces.</span></h1>
         <p className="home-hero__description">Architectural door hardware and bathroom fittings. Made in Rajkot, India, for architects, designers, builders and dealers.</p>
@@ -40,6 +41,6 @@ export const HeroSection: React.FC = () => (
           </Link>
         ))}
       </nav>
-    </div>
+    </Container>
   </section>
 );

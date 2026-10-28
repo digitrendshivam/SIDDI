@@ -1,0 +1,131 @@
+/* =========================================================================
+   SIDDI Architectural Double-Door Page Transition
+   Borrows movement from solid brass architectural door hardware.
+   ========================================================================= */
+
+.doors-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  perspective: 2200px;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.doors-transition.is-active {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Individual 3D Door Leaves */
+.door-leaf {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  background: #0B0B0C;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.door-leaf--left {
+  transform-origin: 0% 50%;
+  transform: rotateY(-100deg);
+  box-shadow: inset -3px 0 0 rgba(255, 196, 0, 0.6), inset -1px 0 24px rgba(0, 0, 0, 0.95);
+  border-right: 1px solid rgba(255, 196, 0, 0.3);
+}
+
+.door-leaf--right {
+  transform-origin: 100% 50%;
+  transform: rotateY(100deg);
+  box-shadow: inset 3px 0 0 #18181B, inset 1px 0 24px rgba(0, 0, 0, 0.95);
+  border-left: 1px solid #1C1B19;
+}
+
+/* Meeting Stile Escutcheon Backplates */
+.door-plate {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 180px;
+  border-radius: 28px;
+  background: #18181B;
+  border: 1px solid rgba(255, 196, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.door-leaf--left .door-plate {
+  right: 28px;
+}
+
+.door-leaf--right .door-plate {
+  left: 28px;
+}
+
+/* Brass Lever Handles on Escutcheon */
+.lever-svg {
+  width: 96px;
+  height: 96px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.65));
+}
+
+.door-leaf--left .lever-svg {
+  margin-right: 50px;
+}
+
+.door-leaf--right .lever-svg {
+  margin-left: 50px;
+}
+
+/* Center Meeting Stile Logo Mark */
+.door-mark {
+  position: absolute;
+  left: 0;
+  bottom: 44px;
+  transform: translateX(-50%);
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+  select: none;
+}
+
+@media (max-width: 640px) {
+  .door-leaf--left .door-plate {
+    right: 14px;
+    width: 46px;
+    height: 150px;
+  }
+  .door-leaf--right .door-plate {
+    left: 14px;
+    width: 46px;
+    height: 150px;
+  }
+  .lever-svg {
+    width: 76px;
+    height: 76px;
+  }
+  .door-leaf--left .lever-svg {
+    margin-right: 38px;
+  }
+  .door-leaf--right .lever-svg {
+    margin-left: 38px;
+  }
+  .door-mark {
+    bottom: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doors-transition {
+    display: none !important;
+  }
+}

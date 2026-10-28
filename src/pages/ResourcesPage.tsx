@@ -1,32 +1,99 @@
 import React from 'react';
-import { FileText, Cube, Ruler } from '@phosphor-icons/react';
-import { Breadcrumbs } from '../components/common/Breadcrumbs';
-import { EnquiryCTA } from '../components/common/EnquiryCTA';
+import { Link } from 'react-router-dom';
 import { Meta } from '../components/common/Meta';
-
-const resources = [
-  { title: 'Product information', copy: 'Review the product catalogue for currently published product names, categories, and finish options.', icon: FileText },
-  { title: 'CAD drawings', copy: 'Request current product drawings for the specific items in your project schedule.', icon: Ruler },
-  { title: 'BIM files', copy: 'Ask the team whether a BIM file is available for the product you are considering.', icon: Cube },
-];
+import { Container } from '../components/layout/Layout';
+import { ApplicationsScrollShowcase } from '../components/resources/ApplicationsScrollShowcase';
 
 export const ResourcesPage: React.FC = () => (
-  <main className="min-h-screen bg-[#F4F3EF] text-[#171719]">
+  <div className="resources-page min-h-screen bg-[#F4F3EF] text-[#171719]">
     <Meta title="Resources — SIDDI Architectural Hardware" description="Find product information and request current technical documents from SIDDI." />
-    <section className="page-hero w-full px-4 sm:px-6 md:px-10 lg:px-16 border-b border-black/10">
-      <Breadcrumbs items={[{ label: 'Resources' }]} className="mb-8 text-gray-400 [&_span]:text-[#F2B705]" />
-      <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">Product information and project documents.</h1>
-      <p className="mt-5 max-w-2xl text-base leading-7 text-[#5B5B61]">Use the catalogue to explore products. For technical files, ask the trade desk for the latest document for your selected product.</p>
-    </section>
-    <section className="w-full px-4 py-12 sm:px-6 sm:py-16 md:px-10 lg:px-16 lg:py-20">
-      <div className="grid gap-5 md:grid-cols-3">
-        {resources.map(({ title, copy, icon: Icon }, index) => <article key={title} className="flex min-h-64 flex-col rounded-lg border border-black/10 bg-white p-6 sm:p-8">
-          <div className="flex items-center justify-between"><Icon size={28} weight="regular" className="text-[#8A6400]" /><span className="font-mono text-xs text-[#777777]">0{index + 1}</span></div>
-          <h2 className="mt-8 text-xl font-semibold">{title}</h2>
-          <p className="mt-3 flex-1 text-sm leading-6 text-[#5B5B61]">{copy}</p>
-        </article>)}
+    
+    {/* Hero Section */}
+    <section className="relative w-full overflow-hidden bg-[#F6F2EC] border-b border-[#E7E2DA]">
+      {/* Desktop Layout (xl+) */}
+      <div className="hidden xl:flex relative w-full min-h-[460px] 2xl:min-h-[490px] items-center">
+        {/* Background Architectural Photography */}
+        <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+          <img
+            src="/Warm Architectural Hardware Studio Still Life.png"
+            alt="Architectural hardware studio display with brass lever on travertine and technical drawings"
+            className="w-full h-full object-cover object-right"
+          />
+          {/* Soft natural gradient blend into the light left side for clean text readability */}
+          <div className="absolute inset-y-0 left-0 w-[48%] bg-gradient-to-r from-[#F6F2EC] via-[#F6F2EC]/50 to-transparent" />
+        </div>
+
+        {/* Content Container (Desktop) */}
+        <Container className="relative z-10 py-10 2xl:py-12">
+          <div className="w-[48%]">
+            {/* Breadcrumb */}
+            <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase">
+              <Link to="/" className="text-[#64748B] hover:text-[#18181B] transition-colors">
+                HOME
+              </Link>
+              <span className="text-[#94A3B8] text-[10px] font-normal">&gt;</span>
+              <span className="text-[#F5B900]" aria-current="page">
+                RESOURCES
+              </span>
+            </nav>
+
+            {/* Heading */}
+            <h1 className="text-[50px] 2xl:text-[56px] font-bold text-[#18181B] tracking-tight leading-[1.06] font-sans">
+              Product information<br />
+              and project documents.
+            </h1>
+
+            {/* Description */}
+            <p className="mt-4 max-w-[650px] text-[17px] 2xl:text-[18px] leading-[1.55] text-[#57534E] font-normal font-sans">
+              Use the catalogue to explore products. For technical files, ask the trade desk for the latest document for your selected product.
+            </p>
+          </div>
+        </Container>
+      </div>
+
+      {/* Mobile, Tablet & Medium Laptop Stacked Layout (< xl) */}
+      <div className="xl:hidden flex flex-col w-full">
+        {/* Top Text Content */}
+        <Container className="pt-8 sm:pt-10 pb-5 sm:pb-6 bg-[#F6F2EC]">
+          <div className="max-w-2xl">
+            {/* Breadcrumb */}
+            <nav aria-label="Breadcrumb" className="mb-3 sm:mb-4 flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-[0.16em] uppercase">
+              <Link to="/" className="text-[#64748B] hover:text-[#18181B] transition-colors">
+                HOME
+              </Link>
+              <span className="text-[#94A3B8] text-[10px] font-normal">&gt;</span>
+              <span className="text-[#F5B900]" aria-current="page">
+                RESOURCES
+              </span>
+            </nav>
+
+            {/* Heading */}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#18181B] tracking-tight leading-[1.1] font-sans">
+              Product information<br className="hidden sm:inline" />
+              {' '}and project documents.
+            </h1>
+
+            {/* Description */}
+            <p className="mt-3 text-sm sm:text-base leading-relaxed text-[#57534E] font-normal font-sans">
+              Use the catalogue to explore products. For technical files, ask the trade desk for the latest document for your selected product.
+            </p>
+          </div>
+        </Container>
+
+        {/* Repositioned Architectural Hardware Display (brass lever on travertine plinth) */}
+        <div className="relative w-full h-[180px] sm:h-[220px] md:h-[260px] bg-[#F6F2EC] overflow-hidden">
+          <img
+            src="/Warm Architectural Hardware Studio Still Life.png"
+            alt="Brass knurled lever on travertine plinth with technical drawings"
+            className="w-full h-full object-cover object-[78%_center]"
+          />
+          {/* Soft top gradient blend for a continuous, seamless transition */}
+          <div className="absolute inset-x-0 top-0 h-12 sm:h-14 bg-gradient-to-b from-[#F6F2EC] to-transparent" />
+        </div>
       </div>
     </section>
-    <EnquiryCTA title="Need help with a project?" description="Send a schedule or ask the trade desk about product documentation." buttonText="Contact the trade desk" />
-  </main>
+
+    {/* Applications Scroll Showcase Section */}
+    <ApplicationsScrollShowcase />
+  </div>
 );

@@ -1,30 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { List, X } from '@phosphor-icons/react';
 import { Button } from '../common/Button';
 import { pauseLenis, resumeLenis } from '../../lib/motion';
 
 const navLinks = [
+  { label: 'Home', path: '/' },
   { label: 'Products', path: '/products' },
-  { label: 'Applications', path: '/applications' },
-  { label: 'Trade desk', path: '/trade-desk' },
   { label: 'Resources', path: '/resources' },
   { label: 'About', path: '/about' },
+  { label: 'Contact us', path: '/trade-desk' },
 ];
 
 export const Header: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const lastScrollY = useRef(0);
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      const current = window.scrollY;
-      if (current <= 200 || current < lastScrollY.current) setIsVisible(true);
-      else if (current > lastScrollY.current) setIsVisible(false);
-      lastScrollY.current = current;
+      setIsScrolled(window.scrollY > 15);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -45,9 +42,17 @@ export const Header: React.FC = () => {
     resumeLenis();
   };
 
+  const isLinkActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    if (path === '/trade-desk' || path === '/contact') {
+      return location.pathname === '/trade-desk' || location.pathname === '/contact';
+    }
+    return location.pathname.startsWith(path);
+  };
+
   return (
     <>
-      <header className={`site-header${isVisible ? '' : ' site-header--hidden'}`}>
+      <header className={`site-header ${isScrolled ? 'site-header--scrolled' : ''}`}>
         <div className="site-header__inner spec-container">
           <Link to="/" className="site-header__brand" aria-label="SIDDI home">
             <img src="/siddi-logo.png" alt="SIDDI" width="1774" height="887" />
@@ -57,7 +62,7 @@ export const Header: React.FC = () => {
               <Link
                 key={path}
                 to={path}
-                aria-current={location.pathname.startsWith(path) ? 'page' : undefined}
+                aria-current={isLinkActive(path) ? 'page' : undefined}
                 className="spec-link mono-label"
               >
                 {label}
@@ -83,7 +88,12 @@ export const Header: React.FC = () => {
         <div className="mobile-navigation" id="mobile-navigation">
           <nav aria-label="Mobile navigation">
             {navLinks.map(({ label, path }) => (
-              <Link key={path} to={path} onClick={closeMenu} aria-current={location.pathname.startsWith(path) ? 'page' : undefined}>
+              <Link
+                key={path}
+                to={path}
+                onClick={closeMenu}
+                aria-current={isLinkActive(path) ? 'page' : undefined}
+              >
                 {label}
               </Link>
             ))}

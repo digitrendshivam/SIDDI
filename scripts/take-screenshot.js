@@ -9,15 +9,28 @@ const height = parseInt(process.argv[5] || '900', 10);
 const scrollY = parseInt(process.argv[6] || '0', 10);
 
 const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
-const port = 9345;
-const tempDir = `C:\\Users\\7x\\AppData\\Local\\Temp\\edge_scr_${Date.now()}`;
+const chromePath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+const browserPath = fs.existsSync(edgePath) ? edgePath : chromePath;
+const port = 9340 + Math.floor(Math.random() * 50);
+const tempDir = `C:\\Users\\7x\\AppData\\Local\\Temp\\browser_scr_${Date.now()}`;
 
-const proc = spawn(edgePath, [
+const proc = spawn(browserPath, [
   '--headless=new',
+  '--no-sandbox',
+  '--disable-gpu',
+  '--no-first-run',
+  '--no-default-browser-check',
+  '--disable-background-networking',
+  '--disable-sync',
+  '--disable-extensions',
+  '--disable-component-update',
   `--remote-debugging-port=${port}`,
   `--user-data-dir=${tempDir}`,
   'about:blank'
 ]);
+
+proc.stderr?.on('data', d => console.error('BROWSER ERR:', d.toString()));
+proc.on('error', e => console.error('PROC ERR:', e));
 
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
@@ -90,29 +103,93 @@ async function run() {
   });
 
   await sendSession('Page.navigate', { url });
-  await wait(3000);
-
-  // If scrollY requested, dispatch mouseWheel events to physically advance compositor
-  if (scrollY > 0) {
-    const step = 100;
-    const numSteps = Math.ceil(scrollY / step);
-    const midX = Math.round(width / 2);
-    const midY = Math.round(height / 2);
-
-    for (let s = 0; s < numSteps; s++) {
-      const delta = (s === numSteps - 1) ? (scrollY - s * step) : step;
-      await sendSession('Input.dispatchMouseEvent', {
-        type: 'mouseWheel',
-        x: midX,
-        y: midY,
-        deltaX: 0,
-        deltaY: delta,
+  
+  // Wait until content has mounted (up to 10 seconds)
+  for (let i = 0; i < 20; i++) {
+    await wait(500);
+    try {
+      const res = await sendSession('Runtime.evaluate', {
+        expression: 'document.querySelectorAll("h1, h2, h3, article, section").length'
       });
-      // Short delay between wheel ticks
-      await wait(30);
-    }
-    // Allow reveal animations and layout to settle
-    await wait(800);
+      if (res?.result?.value > 0) {
+        console.log(`Found ${res.result.value} content elements on page`);
+        break;
+      }
+    } catch (e) {}
+  }
+  // Allow initial loaders / transitions to complete
+  await wait(1000);
+
+  setTimeout(() => {
+    console.error('Safety timeout reached, terminating browser');
+    proc.kill();
+    process.exit(1);
+  }, 12000);
+
+  if (scrollY === -1) {
+    await sendSession('Runtime.evaluate', {
+      expression: `
+        const nav = document.querySelector('nav[aria-label="Catalogue pagination"]');
+        if (nav) {
+          const rect = nav.getBoundingClientRect();
+          window.scrollTo({ top: window.scrollY + rect.top - 400, behavior: 'instant' });
+        }
+      `
+    });
+    await wait(500);
+  } else if (scrollY === -2) {
+    await sendSession('Runtime.evaluate', {
+      expression: `
+        const mapEl = document.getElementById("studio-location-title");
+        if (mapEl) {
+          if (window.__lenis) {
+            window.__lenis.scrollTo(mapEl, { offset: -80, immediate: true });
+          } else {
+            mapEl.scrollIntoView({ behavior: 'instant', block: 'start' });
+          }
+        }
+      `
+    });
+    await wait(5000);
+  } else if (scrollY === -3) {
+    await sendSession('Runtime.evaluate', {
+      expression: `
+        const footerCta = document.querySelector('footer');
+        if (footerCta) {
+          if (window.__lenis) {
+            window.__lenis.scrollTo(footerCta, { offset: -300, immediate: true });
+          } else {
+            footerCta.scrollIntoView({ behavior: 'instant', block: 'start' });
+          }
+        }
+      `
+    });
+    await wait(4000);
+  } else if (scrollY === -5) {
+    await sendSession('Runtime.evaluate', {
+      expression: `
+        const el = Array.from(document.querySelectorAll('div, span')).find(e => e.textContent.includes('FIG. 01–04'));
+        if (el) {
+          if (window.__lenis) {
+            window.__lenis.scrollTo(el, { offset: -120, immediate: true });
+          } else {
+            el.scrollIntoView({ behavior: 'instant', block: 'center' });
+          }
+        }
+      `
+    });
+    await wait(3000);
+  } else if (scrollY > 0) {
+    await sendSession('Runtime.evaluate', {
+      expression: `
+        if (window.__lenis) {
+          window.__lenis.scrollTo(${scrollY}, { immediate: true });
+        } else {
+          window.scrollTo({ top: ${scrollY}, behavior: 'instant' });
+        }
+      `
+    });
+    await wait(500);
   }
 
   const { data } = await sendSession('Page.captureScreenshot', {

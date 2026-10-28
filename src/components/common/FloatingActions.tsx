@@ -3,16 +3,7 @@ import { ArrowUp, WhatsappLogo } from '@phosphor-icons/react';
 import { getLenis } from '../../lib/motion';
 
 export const FloatingActions: React.FC = () => {
-  const [footerVisible, setFooterVisible] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
-
-  useEffect(() => {
-    const footer = document.querySelector('.site-footer');
-    if (!footer) return;
-    const observer = new IntersectionObserver(([entry]) => setFooterVisible(entry.isIntersecting));
-    observer.observe(footer);
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const updateVisibility = () => setShowBackToTop(window.scrollY > 400);
@@ -30,23 +21,21 @@ export const FloatingActions: React.FC = () => {
     }
   };
 
-  const whatsappNumber = '919820012345';
+  const whatsappNumber = '919428161116';
   const whatsappMessage = encodeURIComponent('Hello SIDDI, I would like to contact the trade desk.');
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   return (
     <>
-      {!footerVisible && (
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Contact SIDDI on WhatsApp"
-          className="floating-whatsapp"
-        >
-          <WhatsappLogo size={20} weight="regular" aria-hidden="true" />
-        </a>
-      )}
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contact SIDDI on WhatsApp"
+        className="floating-whatsapp"
+      >
+        <WhatsappLogo size={20} weight="regular" aria-hidden="true" />
+      </a>
       {showBackToTop && (
         <button
           type="button"

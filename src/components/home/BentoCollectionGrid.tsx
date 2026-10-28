@@ -1,3 +1,4 @@
+import { Container } from '../layout/Layout';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from '@phosphor-icons/react';
@@ -80,7 +81,7 @@ const CATEGORY_CARDS: CategoryCard[] = [
 export const BentoCollectionGrid: React.FC = () => {
   return (
     <section className="bento-collection-section bg-[#F7F4EF] text-[#11100F] py-16 sm:py-20 lg:py-28 border-b border-[#E7E2D8]">
-      <div className="home-container w-full px-4 sm:px-6 md:px-10 lg:px-16">
+      <Container className="home-container">
         {/* Section Header */}
         <header className="mb-10 sm:mb-12 lg:mb-14 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 sm:gap-8">
           <div className="max-w-3xl">
@@ -169,7 +170,7 @@ export const BentoCollectionGrid: React.FC = () => {
             </Link>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 };
